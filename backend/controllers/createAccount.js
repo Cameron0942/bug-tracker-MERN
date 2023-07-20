@@ -34,7 +34,12 @@ const createAccount = async (req, res) => {
 
     //* Store email and password in Mongo
     try{
-        let storeInMongo = await userModel.create({
+        // let storeInMongo = await userModel.create({
+        //     email: req.body.email,
+        //     password: hashedPassword,
+        //     role: 'User'
+        // });
+        await userModel.create({
             email: req.body.email,
             password: hashedPassword,
             role: 'User'

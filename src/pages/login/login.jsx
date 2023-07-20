@@ -1,5 +1,5 @@
 //? REACT
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 //? AXIOS
 import axios from 'axios';
@@ -71,7 +71,6 @@ const Login = () => {
     try {
       let login = await axios.post('http://localhost:5000/login', payload);
       let result = login;
-      console.log("RESPONSE", result)
       
       if (result.status === 200) {
         sessionStorage.setItem('jwt', result.data.jwt);
