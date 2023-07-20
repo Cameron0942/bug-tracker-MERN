@@ -4,3 +4,4 @@ const API = axios.create({ baseURL: 'http://localhost:5000' });
 
 //------------------------MongoDB calls//------------------------
 export const createProfile = (profileInfo) => API.post('/', profileInfo);
+export const userLogin = (profileInfo) => API.post('/login', profileInfo);

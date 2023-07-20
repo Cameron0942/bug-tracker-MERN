@@ -1,8 +1,13 @@
 //? REACT
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+//? AXIOS
+import axios from 'axios';
 
 //? MATERIAL UI
 import { Box, Button, Divider, TextField, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 //? FONT AWESOME COMPONENTS
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,6 +25,8 @@ const Login = () => {
   const [emailHelperText, setEmailHelperText] = useState('');
   const [password, setPassword] = useState('');
   const [passwordShown, setPasswordShown] = useState(true);
+  const [loading, setLoading] = useState(false);
+
 
   const eye = <FontAwesomeIcon icon={faEye} />;
   const eyeClosed = <FontAwesomeIcon icon={faEyeSlash} />;
@@ -47,13 +54,43 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!emailValidator(email)) {
       setEmailError(true);
       setEmailHelperText('Please enter a valid email');
+      setLoading(false);
       return;
     }
+
+    const payload = {
+      email: email,
+      password: password
+    }
+
+    try {
+      let login = await axios.post('http://localhost:5000/login', payload);
+      let result = login;
+      console.log("RESPONSE", result)
+      
+      if (result.status === 200) {
+        sessionStorage.setItem('jwt', result.data.jwt);
+        window.location.replace('/dashboard');
+      }
+      
+    }
+    catch(e){
+      console.log("Error submitting", e.response.data);
+      setEmailHelperText(e.response.data);
+      setEmailError(true);
+      setLoading(false);
+    }
   };
+
+    //*Clear session storage on page load
+    useEffect(() => {
+      sessionStorage.clear();
+    }, []);
 
   return (
     <>
@@ -119,14 +156,13 @@ const Login = () => {
                 )
               }}
               />
-            <Button
-              variant='contained'
-              size='large'
-              type='submit'
-              sx={{ marginTop: 2, width: '100%' }}
-            >
-              Sign In
-            </Button>
+              
+              {
+            loading ? 
+            <CircularProgress sx={{margin: '0 auto', display: 'block', marginTop: '1em', color: '#1976d2'}} />
+             :
+            <Button type='submit' variant='contained' size='large' sx={{ marginTop: 2, width: '100%' }}>Sign Up</Button>
+            }
           </Box>
           <Typography sx={{ marginTop: 1 }}>
             Need an account?{' '}
