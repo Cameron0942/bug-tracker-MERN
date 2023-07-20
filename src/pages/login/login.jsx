@@ -1,19 +1,12 @@
-//? AXIOS
-import axios from 'axios';
-
 //? REACT
-import { useEffect, useState } from 'react';
-
-//? CSS
-import './register.css';
+import React, { useState } from 'react';
 
 //? MATERIAL UI
 import { Box, Button, Divider, TextField, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
 
 //? FONT AWESOME COMPONENTS
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 //? ICONS
 import bugIcon from '../../assets/icons8-bug-60.png';
@@ -21,18 +14,12 @@ import bugIcon from '../../assets/icons8-bug-60.png';
 //? CUSTOM FUNCTIONS
 import emailValidator from '../../validators/validateEmail';
 
-const Register = () => {
-
-  //? page variables
+const Login = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [confirmPasswordHelperText, setConfirmPasswordHelperText] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [passwordShown, setPasswordShown] = useState(true);
-  const [loading, setLoading] = useState(false);
 
   const eye = <FontAwesomeIcon icon={faEye} />;
   const eyeClosed = <FontAwesomeIcon icon={faEyeSlash} />;
@@ -53,12 +40,6 @@ const Register = () => {
         setPassword(e.target.value);
         break;
 
-      case 'confirmPassword':
-        setConfirmPassword(e.target.value);
-        setConfirmPasswordError(false);
-        setConfirmPasswordHelperText('');
-        break;
-
       default:
         break;
     }
@@ -66,52 +47,13 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     if (!emailValidator(email)) {
       setEmailError(true);
       setEmailHelperText('Please enter a valid email');
-      setLoading(false);
       return;
-    }
-
-    if (password !== confirmPassword) {
-      setConfirmPasswordHelperText('Passwords must match');
-      setLoading(false);
-      setConfirmPasswordError(true);
-      return;
-    }
-
-    const payload = {
-      email: email,
-      password: password,
-    }
-    
-    try {
-      let register = await axios.post('http://localhost:5000/', payload);
-      let result = register;
-      console.log("RESPONSE", result)
-      
-      if (result.status === 201) {
-        sessionStorage.setItem('jwt', result.data.jwt);
-        window.location.replace('/dashboard');
-      }
-      
-      setConfirmPasswordError(false);
-    }
-    catch(e){
-      console.log("Error submitting", e.response.data);
-      setEmailHelperText(e.response.data);
-      setEmailError(true);
-      setLoading(false);
     }
   };
-
-  //*Clear session storage on page load
-  useEffect(() => {
-    sessionStorage.clear();
-  }, []);
-
 
   return (
     <>
@@ -138,18 +80,17 @@ const Register = () => {
               alignItems: 'center',
             }}
           >
-            <img src={bugIcon} width={60} height={60} /> Bug Tracker
-            
+            <img src={bugIcon} alt='Bug Icon' width={60} height={60} /> Bug Tracker
           </Typography>
           <Divider />
 
           <Typography variant='h2' sx={{ fontSize: 35, textAlign: 'center', marginTop: 2 }}>
-            Create Account
+            Welcome Back
           </Typography>
 
           <Box component='form' onSubmit={handleSubmit}>
             <Typography variant='h6' sx={{ fontWeight: 600, textAlign: 'left' }}>
-              Email *
+              Email
             </Typography>
             <TextField
               required
@@ -159,9 +100,9 @@ const Register = () => {
               helperText={emailHelperText}
               onChange={(event) => handleChange(event, 'email')}
               sx={{ width: '100%', backgroundColor: '#dadee3' }}
-            />
+              />
             <Typography variant='h6' sx={{ fontWeight: 600, textAlign: 'left' }}>
-              Password *
+              Password
             </Typography>
             <TextField
               required
@@ -177,38 +118,20 @@ const Register = () => {
                   </i>
                 )
               }}
-            />
-            <Typography variant='h6' sx={{ fontWeight: 600, textAlign: 'left',}}>
-              Confirm Password
-            </Typography>
-            <TextField
-              required
-              variant='outlined'
-              size='small'
-              type={passwordShown ? "text" : "password"}
-              onChange={(event) => handleChange(event, 'confirmPassword')}
-              helperText={confirmPasswordHelperText}
-              error={confirmPasswordError}
-              sx={{ width: '100%', backgroundColor: '#dadee3' }}
-              InputProps={{
-                endAdornment: (
-                  <i onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
-                    {passwordShown ? eye : eyeClosed}
-                  </i>
-                )
-              }}
-            />
-            {
-            loading ? 
-            <CircularProgress sx={{margin: '0 auto', display: 'block', marginTop: '1em', color: '#1976d2'}} />
-             :
-            <Button type='submit' variant='contained' size='large' sx={{ marginTop: 2, width: '100%' }}>Sign Up</Button>
-            }
+              />
+            <Button
+              variant='contained'
+              size='large'
+              type='submit'
+              sx={{ marginTop: 2, width: '100%' }}
+            >
+              Sign In
+            </Button>
           </Box>
           <Typography sx={{ marginTop: 1 }}>
-            Already have an account?{' '}
-            <a href='/login' style={{ color: '#0091E2', textDecoration: 'none', fontWeight: 600 }}>
-              Sign In
+            Need an account?{' '}
+            <a href='/' style={{ color: '#0091E2', textDecoration: 'none', fontWeight: 600 }}>
+              Sign Up
             </a>
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
@@ -223,4 +146,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

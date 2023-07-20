@@ -1,7 +1,9 @@
 // import React from "react";
 import { Navigate } from "react-router-dom";
 
-const Dashboard = () => {
+import Dashboard from "./component/Dashboard";
+
+const ProtectedDashboard = () => {
   // Check if a legitimate JWT token exists in sessionStorage
   const jwtToken = sessionStorage.getItem("jwt");
 
@@ -12,7 +14,7 @@ const Dashboard = () => {
   
 
   // If the user is authenticated, render the dashboard content
-  return <div>Dashboard Content</div>;
+  return <Dashboard />;
 };
 
-export default Dashboard;
+export default ProtectedDashboard;
