@@ -73,16 +73,16 @@ const Login = () => {
       let result = login;
       
       if (result.status === 200) {
-        sessionStorage.setItem('jwt', result.data.jwt);
+        sessionStorage.setItem('jwt', result.data);
         window.location.replace('/dashboard');
       }
       
     }
     catch(e){
-      console.log("Error submitting", e.response.data);
+      setLoading(false);
+      console.log("Error submitting", e);
       setEmailHelperText(e.response.data);
       setEmailError(true);
-      setLoading(false);
     }
   };
 

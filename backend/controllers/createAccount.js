@@ -10,6 +10,9 @@ import jwt from "jsonwebtoken";
 
 const createAccount = async (req, res) => {
 
+    //*Check for null data
+    if (!req.body.email || !req.body.password) return res.status(409).json('Cannot send empty data')
+
     //* Check if email already exists
     //* if so break out of account creation
     try{
