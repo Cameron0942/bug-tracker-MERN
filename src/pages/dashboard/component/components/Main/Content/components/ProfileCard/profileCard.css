@@ -1,0 +1,12 @@
+.profileContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bio {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}

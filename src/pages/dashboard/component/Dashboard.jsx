@@ -2,12 +2,13 @@
 
 //? COMPONENTS
 import TopBar from "./components/TopBar/TopBar";
+import DashboardMain from "./components/Main/DashboardMain";
 
 const Dashboard = () => {
   return (
   <>
     <TopBar />
-    <div style={{fontSize: 24, textAlign: 'center'}}>Dashboard COMPONENT</div>    
+    <DashboardMain />
   </>
   )
 };

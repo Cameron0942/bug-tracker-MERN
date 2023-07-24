@@ -1,0 +1,32 @@
+.optionsMain {
+    /* outline: 2px solid orangered; */
+    background-color: #f9f9f9;
+    width: 22vw;
+    min-width: 200px;
+    height: 93vh;
+    text-align: center;
+    position: relative;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 25%;
+    width: max-content; /* Make the container only as wide as its content */
+    margin: 0 auto;
+}
+
+.welcome {
+    font-size: 36px;
+}
+
+footer {
+    position: absolute; /* Positioned at the bottom of .main */
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+  }

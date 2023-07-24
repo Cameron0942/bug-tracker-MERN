@@ -1,19 +1,8 @@
-// import React from 'react'
-
-// const TopBar = () => {
-//   return (
-//     <div>TopBar</div>
-//   )
-// }
-
-// export default TopBar
-
-
 //? REACT
-import React from 'react';
+// import React from 'react';
 
 //? CSS
-import './TopBar.css';
+import './topBar.css';
 
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -71,7 +60,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const TopBar = () => {
 
   return (
-  <div className='main'>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{boxShadow: 'none'}}>
         <Toolbar>
@@ -105,7 +93,6 @@ const TopBar = () => {
         </Toolbar>
       </AppBar>
     </Box>
-  </div>
   );
 }
 
